@@ -38,7 +38,7 @@ AppRate = (function() {
 
   counter = {
     applicationVersion: void 0,
-    countdown: 0
+    countdown: 1
   };
 
   promptForRatingWindowButtonClickHandler = function(buttonIndex) {
@@ -71,7 +71,7 @@ AppRate = (function() {
         }
         break;
       case 'reset':
-        counter.countdown = 0;
+        counter.countdown = 1;
         break;
       case 'stop':
         counter.countdown = AppRate.preferences.usesUntilPrompt + 1;
@@ -82,7 +82,7 @@ AppRate = (function() {
 
   showDialog = function(immediately) {
     var base, localeObj;
-    if (counter.countdown > (AppRate.preferences.usesUntilPrompt-1) || immediately) {
+    if (counter.countdown === AppRate.preferences.usesUntilPrompt || immediately) {
       if (!AppRate.preferences.useCustomRateDialog) {
         localeObj = AppRate.preferences.customLocale || Locales.getLocale(AppRate.preferences.useLanguage, AppRate.preferences.displayAppName);
         navigator.notification.confirm(localeObj.message, promptForRatingWindowButtonClickHandler, localeObj.title, [localeObj.rateButtonLabel, localeObj.laterButtonLabel, localeObj.cancelButtonLabel]);
@@ -215,7 +215,7 @@ AppRate = (function() {
           PREF_STORE_URL_FORMAT_IOS = PREF_STORE_URL_FORMAT_IOS8;
         } else {
           PREF_STORE_URL_FORMAT_IOS = PREF_STORE_URL_FORMAT_IOS9;
-        }        
+        }
         window.open(PREF_STORE_URL_FORMAT_IOS + this.preferences.storeAppURL.ios, '_system');
       }
     } else if (/(Android)/i.test(navigator.userAgent.toLowerCase())) {
